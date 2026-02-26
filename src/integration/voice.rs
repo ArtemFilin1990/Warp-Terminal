@@ -49,7 +49,8 @@ impl VoiceInput {
             text: text.into(),
             confidence,
         });
-        self.transcripts.last().unwrap()
+        // SAFETY: we just pushed an element, so the vector is non-empty.
+        &self.transcripts[self.transcripts.len() - 1]
     }
 
     /// Return the most recent transcript, if any.

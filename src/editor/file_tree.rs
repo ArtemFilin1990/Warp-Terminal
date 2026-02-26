@@ -88,8 +88,9 @@ impl FileTree {
             if node.expanded {
                 node.expanded = false;
                 node.children.clear();
-            } else {
-                let _ = Self::load_dir(node);
+            } else if let Err(_) = Self::load_dir(node) {
+                // If loading fails the node remains unexpanded with no children.
+                return false;
             }
             return true;
         }

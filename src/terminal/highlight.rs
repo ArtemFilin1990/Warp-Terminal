@@ -56,10 +56,10 @@ impl Highlighter {
                 }
                 tokens.push(Token { text: s, kind: TokenKind::String });
             } else if ch.is_ascii_digit() {
-                // Number — consume digits/dots using peek to avoid losing the delimiter
+                // Number — consume digits and decimal points only via peek to avoid losing the delimiter
                 let mut num = String::new();
                 while let Some(&c) = chars.peek() {
-                    if c.is_ascii_alphanumeric() || c == '.' {
+                    if c.is_ascii_digit() || c == '.' {
                         num.push(c);
                         chars.next();
                     } else {

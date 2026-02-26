@@ -241,6 +241,21 @@ mod tests {
     }
 
     #[test]
+    fn test_handle_key_unknown_does_not_modify_buffer() {
+        let mut buf = InputBuffer::new();
+        buf.insert_char('a');
+        let ev = KeyEvent {
+            code: KeyCode::F(1),
+            modifiers: KeyModifiers::NONE,
+            kind: KeyEventKind::Press,
+            state: KeyEventState::NONE,
+        };
+        let submitted = buf.handle_key(ev);
+        assert!(!submitted);
+        assert_eq!(buf.text(), "a");
+    }
+
+    #[test]
     fn test_clear() {
         let mut buf = InputBuffer::new();
         buf.insert_char('a');
